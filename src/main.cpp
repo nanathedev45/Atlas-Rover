@@ -36,6 +36,8 @@ void reverse(int actualSpeed) {
 }
 
 void stop() {
+    PS4.setLed(0, 0, 255);
+    PS4.sendToController();
     digitalWrite(ENA, LOW);
     digitalWrite(ENB, LOW);
     digitalWrite(IN1, LOW);
@@ -65,10 +67,11 @@ void loop() {
 
     if (PS4.isConnected()) {
         Serial.print("Connected");
-        PS4.setLed(100, 25, 255);
+        PS4.setLed(0, 0, 255);
         PS4.sendToController();
         move(speed, actualSpeed);
     } else {
         Serial.print("Fail");
     }
+    delay(50);
 }
