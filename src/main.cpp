@@ -30,7 +30,7 @@ void setup() {
 }
 
 void drive(int actualSpeed) {
-    //Serial.println("Drive mode");
+    Serial.println("Drive mode");
     analogWrite(ENA, actualSpeed);
     analogWrite(ENB, actualSpeed);
     digitalWrite(IN1, HIGH);
@@ -103,5 +103,3 @@ void loop() {
     }
     delay(1000);
 }
-
-// screen /dev/cu.usbserial-0001 115200
