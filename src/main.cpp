@@ -88,12 +88,10 @@ void move(int speed, int actualSpeed) {
 
 void loop() {
     if (PS4.isConnected()) {
-    speed = PS4.LStickY();
-    actualSpeed = map(speed, -255, 0, 255, 1023);
-    Serial.println("Speed: "+speed);
-    Serial.println("ActualSpeed: "+actualSpeed);
-
-
+        speed = PS4.LStickY();
+        actualSpeed = map(speed, -255, 0, 255, 1023);
+        Serial.println("Speed: "+speed);
+        Serial.println("ActualSpeed: "+actualSpeed);
         PS4.setLed(0, 255, 0);
         PS4.sendToController();
         move(speed, actualSpeed);
