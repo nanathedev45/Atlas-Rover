@@ -64,6 +64,7 @@ void turning(int steering, int deg) {
     Serial.println("Steering: "+steering);
     deg = map(steering, -255, 255, 0, 180);
     if (PS4.R1()) {
+        Serial.println("R1 pressed, steering overrode, straightened");
         deg = 90;
     }
     steerServo.write(deg);
@@ -77,23 +78,25 @@ void turning(int steering, int deg) {
 }
 
 void move(int speed, int actualSpeed) {
+    if (PS4.L1()) {
+        Serial.println("L1 pressed, emergency stop activated");
+        speed = 0;
+    }
     if (speed > 0) {
         drive(actualSpeed);
     } else if (speed<0) {
         reverse(actualSpeed);
-    } else if (speed == 0 || PS4.L1()) {
+    } else if (speed == 0) {
         stop();
     }
 }
 
 void loop() {
     if (PS4.isConnected()) {
-        speed = PS4.LStickY();
-        actualSpeed = map(speed, -255, 0, 255, 1023);
-        Serial.println("Speed: "+speed);
-        Serial.println("ActualSpeed: "+actualSpeed);
         PS4.setLed(0, 255, 0);
         PS4.sendToController();
+        speed = PS4.LStickY();
+        actualSpeed = map(speed, -255, 255, 0, 1023);
         move(speed, actualSpeed);
         turning(steering, deg);
     } else {
